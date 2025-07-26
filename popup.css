@@ -1,0 +1,55 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f7fa;
+    padding: 20px;
+    text-align: center;
+    width: 200px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .progress-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  
+  svg {
+    transform: rotate(-90deg);
+  }
+  
+  circle {
+    fill: none;
+    stroke-width: 10;
+    cx: 60;
+    cy: 60;
+    r: 50;
+  }
+  
+  .bg {
+    stroke: #eee;
+  }
+  
+  .fg {
+    stroke: #4CAF50;
+    stroke-linecap: round;
+    stroke-dasharray: 314;
+    stroke-dashoffset: 314;
+    transition: stroke-dashoffset 0.6s ease;
+  }
+  
+  .progress-text {
+    font-size: 18px;
+    fill: #333;
+    transform: rotate(90deg);
+  }
+  

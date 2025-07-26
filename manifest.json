@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "CodeTracker Pro",
+    "version": "1.0",
+    "permissions": [
+      "storage", "notifications", "alarms", "cookies", "scripting"
+    ],
+    "background": { "service_worker": "background.js" },
+    "content_scripts": [
+      {
+        "matches": [
+          "https://leetcode.com/*",
+          "https://www.hackerrank.com/*",
+          "https://codeforces.com/*"
+        ],
+        "js": ["content.js"]
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    
+    "host_permissions": [
+      "https://your-codetrackerpro-backend.com/*"
+    ]
+  }
