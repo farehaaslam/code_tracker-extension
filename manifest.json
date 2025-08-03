@@ -3,7 +3,7 @@
     "name": "CodeTracker Pro",
     "version": "1.0",
     "permissions": [
-      "storage", "notifications", "alarms", "cookies", "scripting"
+      "storage", "notifications", "alarms", "cookies", "scripting","activeTab"
     ],
     "background": { "service_worker": "background.js" },
     "content_scripts": [
@@ -11,7 +11,8 @@
         "matches": [
           "https://leetcode.com/*",
           "https://www.hackerrank.com/*",
-          "https://codeforces.com/*"
+          "https://codeforces.com/*",
+          "http://localhost:5173/*"
         ],
         "js": ["content.js"]
       }
@@ -21,6 +22,7 @@
     },
     
     "host_permissions": [
-      "https://your-codetrackerpro-backend.com/*"
+      "http://localhost:5000/*",
+      "http://localhost:5173/*"
     ]
   }
