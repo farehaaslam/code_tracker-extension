@@ -2,21 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CodeTracker Pro</title>
-  <link rel="stylesheet" href="popup.css">
+  <title>CodeTracker Progress</title>
+  <style>
+    body {
+      background-color: #1a1a1a; /* Dark background */
+      color: #ffffff; /* Light text */
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      width: 300px; /* Typical popup width */
+      text-align: center;
+      margin: 0;
+    }
+    h1 {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #a991ff; /* Purple accent */
+    }
+    .progress-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+    }
+    .progress-circle {
+      transform: rotate(-90deg);
+    }
+    .progress-bg {
+      stroke: #333333; /* Dark gray background */
+    }
+    .progress-fg {
+      stroke: #8b5cf6; /* Purple foreground */
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .summary {
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+    .label {
+      font-size: 0.9em;
+      color: #cccccc;
+    }
+    .success-message {
+      color: #22c55e; /* Green for success */
+      font-size: 0.8em;
+      margin-top: 10px;
+    }
+    .error {
+      color: #ef4444; /* Red for errors */
+    }
+    .loading {
+      font-style: italic;
+      color: #999999;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Today's Progress</h1>
-    <div class="progress-ring">
-      <svg width="120" height="120">
-        <circle class="bg" cx="60" cy="60" r="50" />
-        <circle class="fg" cx="60" cy="60" r="50" />
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="progress-text">0%</text>
-      </svg>
-    </div>
-    <p id="summary">0 / 5 problems solved</p>
+  <h1>Today's Progress</h1>
+  <div class="progress-container">
+    <svg width="120" height="120" class="progress-circle">
+      <circle class="progress-bg" cx="60" cy="60" r="50" stroke-width="10" fill="none" />
+      <circle id="progress-fg" class="progress-fg" cx="60" cy="60" r="50" stroke-width="10" fill="none"
+              stroke-dasharray="314" stroke-dashoffset="314" />
+    </svg>
+    <div id="progress-text" class="progress-text">0%</div>
   </div>
+  <div id="summary" class="summary loading">Loading...</div>
+  <div class="label">Your Target: <span id="target-display">Loading...</span></div>
+  <div class="label">Today's Submissions: <span id="sub-count">Loading...</span></div>
+  <div id="message" class="success-message"></div>
+
   <script src="popup.js"></script>
 </body>
 </html>
