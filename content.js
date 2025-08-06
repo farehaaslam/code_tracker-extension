@@ -5,9 +5,7 @@ window.addEventListener("message", (event) => {
   if (event.source !== window) return;
 console.log("🔁 Received window message in content.js:", event.data);
   if (event.data.type === "AUTH_TOKEN") {
-    // chrome.storage.local.set({ authToken: event.data.token }, () => {
-    //   console.log("🔐 Auth token saved in extension storage");
-    // });
+  
      chrome.runtime.sendMessage({
       type: "AUTH_TOKEN",
       token: event.data.token,

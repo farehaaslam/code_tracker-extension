@@ -1,6 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
-  console.log("🟢 Background script installed");
+  console.log("Background script installed");
 });
+const BASE_URL = "https://codetracker-api.onrender.com/api";
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "AUTH_TOKEN") {
@@ -10,7 +11,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         refreshToken: message.refreshToken, 
       },
       () => {
-        console.log("🔐 Tokens saved to chrome.storage.local");
+        console.log(" Tokens saved to chrome.storage.local");
       }
     );
     return;
@@ -30,7 +31,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           if (!refreshToken)
             throw new Error("No refresh token available. Please sign in.");
           const refreshRes = await fetch(
-            "http://localhost:5000/api/user/refresh",
+            `${BASE_URL}/user/refresh`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -45,10 +46,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             authToken: newToken,
             refreshToken: newRefresh,
           });
-          console.log("🔄 Token refreshed successfully");
+          console.log("Token refreshed successfully");
         }
         const response = await fetch(
-          "http://localhost:5000/api/user/gettarget",
+          `${BASE_URL}/user/gettarget`,
           {
             // Local gettarget endpoint
             method: "GET",
@@ -66,7 +67,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log(data);
         sendResponse({ target: data.target || data }); 
       } catch (err) {
-        console.error("❌ Failed to fetch target:", err.message);
+        console.error("Failed to fetch target:", err.message);
         sendResponse({ error: err.message });
       }
     })();
@@ -85,7 +86,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           if (!refreshToken)
             throw new Error("No refresh token available. Please sign in.");
           const refreshRes = await fetch(
-            "http://localhost:5000/api/user/refresh",
+            `${BASE_URL}/user/refresh`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -100,10 +101,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             authToken: newToken,
             refreshToken: newRefresh,
           });
-          console.log("🔄 Token refreshed successfully");
+          console.log("Token refreshed successfully");
         }
         const response = await fetch(
-          "http://localhost:5000/api/submission/todaysubmission",
+          `${BASE_URL}/submission/todaysubmission`,
           {
             method: "GET",
             headers: {
@@ -122,7 +123,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log(data);
         sendResponse({ count: data.count || 0 }); 
       } catch (err) {
-        console.error("❌ Failed to fetch submission count:", err.message);
+        console.error("Failed to fetch submission count:", err.message);
         sendResponse({ error: err.message });
       }
     })();
@@ -140,11 +141,11 @@ async function handleSubmission(data) {
     if (!authToken || isTokenExpired(authToken)) {
       if (!refreshToken) {
         console.warn(
-          "⚠️ No refresh token found. Ask user to sign in via web app."
+          " No refresh token found. Ask user to sign in via web app."
         );
         return;
       }
-      const refreshRes = await fetch("http://localhost:5000/api/user/refresh", {
+      const refreshRes = await fetch(`${BASE_URL}/user/refresh`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refreshToken }),
@@ -157,7 +158,7 @@ async function handleSubmission(data) {
         authToken: newToken,
         refreshToken: newRefresh,
       });
-      console.log("🔄 Token refreshed successfully");
+      console.log("Token refreshed successfully");
     }
 
     const submission = {
@@ -172,7 +173,7 @@ async function handleSubmission(data) {
     };
 
     const response = await fetch(
-      "http://localhost:5000/api/submission/create",
+      `${BASE_URL}/submission/create`,
       {
         // Local submission endpoint
         method: "POST",
